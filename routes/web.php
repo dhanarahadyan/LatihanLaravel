@@ -19,5 +19,6 @@ Route::get('/', function () {
 
 Route::get('/test1','MathMin@index');
 Route::get('/test2','MathMin@testing');
+Route::get('/test3','Testing@index');
 
 Route::resource('photos', PhotoController::class);
