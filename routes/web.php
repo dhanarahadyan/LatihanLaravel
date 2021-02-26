@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $c = 'dhanarahadyan';
+    return view('welcome', ['nama' => $c]);
 });
 
 Route::get('/test1','MathMin@index');

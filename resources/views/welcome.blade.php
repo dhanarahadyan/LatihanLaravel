@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Welcome dhanarahadyan
+                    Welcome {{$nama}}
                 </div>
 
                 <div class="links">
