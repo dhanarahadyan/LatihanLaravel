@@ -12,15 +12,15 @@ class ProductController extends Controller
         // $nameProduct = $request -> input('name_product');
         // $priceProduct = $request -> input('price_product');
         // return view('child',['name' => $comment]);
-        return 'this is get method';
+        return 'Ih kamu get method';
     }
 
-    public function add (Request $request){
+    public function post (Request $request){
         // $idProduct = $request -> input('id_product');
         // $nameProduct = $request -> input('name_product');
         // $priceProduct = $request -> input('price_product');
         // $product -> save();
-        return 'this is post method';
+        return 'Ah yang ini post method';
     }
 
     public function put (Request $request){
@@ -28,10 +28,10 @@ class ProductController extends Controller
         // $nameProduct = $request -> input('name_product');
         // $priceProduct = $request -> input('price_product');
         // $product -> save();
-        return 'this is put method';
+        return 'Eh dong ini put method';
     }
 
-    public function delete ($id){
-        return 'this is delete method';
+    public function delete (Request $request){
+        return 'Dah lah ini delete method';
     }
 }
