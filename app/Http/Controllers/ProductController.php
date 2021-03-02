@@ -12,7 +12,8 @@ class ProductController extends Controller
         // $nameProduct = $request -> input('name_product');
         // $priceProduct = $request -> input('price_product');
         // return view('child',['name' => $comment]);
-        return 'Ih kamu get method';
+
+        return 'Get Method untuk masuk ke index';
     }
 
     public function post (Request $request){
@@ -20,6 +21,20 @@ class ProductController extends Controller
         // $nameProduct = $request -> input('name_product');
         // $priceProduct = $request -> input('price_product');
         // $product -> save();
+
+
+        $validatedData = $request -> validate([
+            'name' => 'required | max:1',
+            'address' => 'required',
+        ]);
+        dd($validatedData);
+
+        //Example for client side on React Native for response
+        if($request -> input["Address"]){
+            return response("Granted", 201);
+        } else {
+            return response("Failed", 500);
+        }
         return 'Ah yang ini post method';
     }
 
@@ -31,7 +46,7 @@ class ProductController extends Controller
         return 'Eh dong ini put method';
     }
 
-    public function delete (Request $request){
-        return 'Dah lah ini delete method';
+    public function delete ($id, $tester){
+        return $id.' Dah lah ini delete method '.$tester;
     }
 }
