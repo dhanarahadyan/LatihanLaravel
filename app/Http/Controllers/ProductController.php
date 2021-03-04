@@ -3,50 +3,78 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     //
     public function index (Request $request){
-        // $idProduct = $request -> input('id_product');
-        // $nameProduct = $request -> input('name_product');
-        // $priceProduct = $request -> input('price_product');
-        // return view('child',['name' => $comment]);
+        $product = DB::table('product')->get();
 
-        return 'Get Method untuk masuk ke index';
+        return response()->json(
+            [
+                'status'=>'success',
+                'data'=>$product
+            ],
+            200
+        );
     }
 
     public function post (Request $request){
-        // $idProduct = $request -> input('id_product');
-        // $nameProduct = $request -> input('name_product');
-        // $priceProduct = $request -> input('price_product');
-        // $product -> save();
+        $inserted = DB::table('product')
+        ->insert(
+            [
+            'name' => $request->input('name'),
+            'title' => $request->input('title')
+            ]);
+  
+        if($inserted){
+        $message = 'Insert Success!';
+  }
 
+  return response()->json(
+      [
+          'status'=>'Success',
+          'message'=>$message
+      ]
+      );
+    }
 
-        $validatedData = $request -> validate([
-            'name' => 'required | max:1',
-            'address' => 'required',
-        ]);
-        dd($validatedData);
-
-        //Example for client side on React Native for response
-        if($request -> input["Address"]){
-            return response("Granted", 201);
-        } else {
-            return response("Failed", 500);
+    public function put (Request $request, $id){
+        $updated = DB::table('product')
+        ->where('id', $id)
+        ->update(
+       [
+                  'name' => $request->input('name'),
+                  'title' => $request->input('title')
+                  ]);
+        
+        if($updated){
+            $message = 'Update Success!';
         }
-        return 'Ah yang ini post method';
+
+        return response()->json(
+            [
+                'status'=>'Success',
+                'message'=>$message
+            ]
+            );
     }
 
-    public function put (Request $request){
-        // $idProduct = $request -> input('id_product');
-        // $nameProduct = $request -> input('name_product');
-        // $priceProduct = $request -> input('price_product');
-        // $product -> save();
-        return 'Eh dong ini put method';
-    }
+    public function delete ($id){
+        $deleted = DB::table('product')
+        ->where('id', $id)
+        ->delete();
 
-    public function delete ($id, $tester){
-        return $id.' Dah lah ini delete method '.$tester;
+        if($deleted){
+            $message = 'Delete Success!';
+        }
+
+        return response()->json(
+            [
+                'status'=>'Success',
+                'message'=>$message
+            ]
+        );
     }
 }
