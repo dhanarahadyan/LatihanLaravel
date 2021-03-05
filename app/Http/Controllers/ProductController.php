@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Product;
 
 class ProductController extends Controller
 {
-    //
     public function index (Request $request){
-        $product = DB::table('product')->get();
+
+    //DB Query Builder
+    // $product = DB::table('products')->select('name','title')->get();
+
+    //Eloquent
+    $product = Product::select('name','title','id')->get();
 
         return response()->json(
             [
@@ -20,17 +25,29 @@ class ProductController extends Controller
         );
     }
 
-    public function post (Request $request){
-        $inserted = DB::table('product')
-        ->insert(
-            [
-            'name' => $request->input('name'),
-            'title' => $request->input('title')
-            ]);
-  
-        if($inserted){
-        $message = 'Insert Success!';
-  }
+    public function post (Request $request){        
+        
+        //DB Query Builder    
+        // $inserted = DB::table('product')
+        // ->insert(
+        //     [
+        //     'name' => $request->input('name'),
+        //     'title' => $request->input('title')
+        //     ]);
+                
+        //Eloquent
+        $product = new Product;
+        $product->name = $request->input('name');
+        $product->title = $request->input('title');
+        
+        if($product->save()){
+            $message = 'Insert Success';
+        } else {
+            $message = 'Insert Failed';
+        }
+
+        // if($inserted){
+        // $message = 'Insert Success!';
 
   return response()->json(
       [
@@ -41,16 +58,25 @@ class ProductController extends Controller
     }
 
     public function put (Request $request, $id){
-        $updated = DB::table('product')
-        ->where('id', $id)
-        ->update(
-       [
-                  'name' => $request->input('name'),
-                  'title' => $request->input('title')
-                  ]);
+        //DB Query Builder
+        // $updated = DB::table('product')
+        // ->where('id', $id)
+        // ->update(
+        //     [
+        //       'name' => $request->input('name'),
+        //       'title' => $request->input('title')
+        //     ]);
         
-        if($updated){
+        //Eloquent
+        $product = Product::find($id);
+        $product->name = $request->input('name');
+        $product->title = $request->input('title');
+        $product->id = $request->input('id');
+
+        if($product->save()){
             $message = 'Update Success!';
+        } else {
+            $message = 'Update Failed!';
         }
 
         return response()->json(
@@ -62,12 +88,18 @@ class ProductController extends Controller
     }
 
     public function delete ($id){
-        $deleted = DB::table('product')
-        ->where('id', $id)
-        ->delete();
+        //DB Query Builder
+        // $deleted = DB::table('product')
+        // ->where('id', $id)
+        // ->delete();
+        
+        //Eloquent
+        $product = Product::find($id);
 
-        if($deleted){
+        if($product->delete()){
             $message = 'Delete Success!';
+        } else {
+            $message = 'Delete Failed!';
         }
 
         return response()->json(
