@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Product;
+use App\TheProduct;
 
 class ProductController extends Controller
 {
@@ -14,7 +14,7 @@ class ProductController extends Controller
     // $product = DB::table('products')->select('name','title')->get();
 
     //Eloquent
-    $product = Product::select('name','title','id')->get();
+    $product = TheProduct::select('id','Name','Stock','Category','Photo','Description','Condition','Price')->get();
 
         return response()->json(
             [
@@ -36,10 +36,15 @@ class ProductController extends Controller
         //     ]);
                 
         //Eloquent
-        $product = new Product;
-        $product->name = $request->input('name');
-        $product->title = $request->input('title');
-        
+        $product = new TheProduct;
+        $product->Name = $request->input('Name');
+        $product->Stock = $request->input('Stock');
+        $product->Category = $request->input('Category');
+        $product->Photo = $request->input('Photo');
+        $product->Description = $request->input('Description');
+        $product->Condition = $request->input('Condition');
+        $product->Price = $request->input('Price');
+
         if($product->save()){
             $message = 'Insert Success';
         } else {
@@ -68,10 +73,14 @@ class ProductController extends Controller
         //     ]);
         
         //Eloquent
-        $product = Product::find($id);
-        $product->name = $request->input('name');
-        $product->title = $request->input('title');
-        $product->id = $request->input('id');
+        $product = TheProduct::find($id);
+        $product->Name = $request->input('Name');
+        $product->Stock = $request->input('Stock');
+        $product->Category = $request->input('Category');
+        $product->Photo = $request->input('Photo');
+        $product->Description = $request->input('Description');
+        $product->Condition = $request->input('Condition');
+        $product->Price = $request->input('Price');
 
         if($product->save()){
             $message = 'Update Success!';
@@ -94,7 +103,7 @@ class ProductController extends Controller
         // ->delete();
         
         //Eloquent
-        $product = Product::find($id);
+        $product = TheProduct::find($id);
 
         if($product->delete()){
             $message = 'Delete Success!';
